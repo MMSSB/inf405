@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Database Systems Testbank</title>
+<meta name="description" content="Database Systems Testbank">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* === CSS RESET & VARIABLES === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  /* Light Theme */
+  --bg: #fdfbf7;
+  --bg-rgb: 253, 251, 247;
+  --surface: #ffffff;
+  --surface-alt: #f3f0ea;
+  --text-main: #1c1917;
+  --text-muted: #78716c;
+  --border: #e7e5e4;
+  --border-hover: #d6d3d1;
+  --primary: #138dff;
+  --primary-hover: #0077ff;
+  --primary-bg: #ede9fe;
+  
+  /* Retained States */
+  --answered: #64748b;
+  --success: #10b981;
+  --success-bg: #d1fae5;
+  --danger: #ef4444;
+  --danger-bg: #fee2e2;
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+  --modal-overlay: rgba(28, 25, 23, 0.4);
+}
+
+[data-theme="dark"] {
+  /* Dark Theme */
+  --bg: #0c0c0c;
+  --bg-rgb: 12, 12, 12;
+  --surface: #18181b;
+  --surface-alt: #27272a;
+  --text-main: #fafaf9;
+  --text-muted: #a1a1aa;
+  --border: #3f3f46;
+  --border-hover: #52525b;
+  --primary: #138dff;
+  --primary-hover: #0077ff;
+  --primary-bg: rgba(167, 139, 250, 0.15);
+  
+  /* Retained States */
+  --answered: #94a3b8;
+  --success: #10b981;
+  --success-bg: rgba(16, 185, 129, 0.15);
+  --danger: #ef4444;
+  --danger-bg: rgba(239, 68, 68, 0.15);
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.5);
+  --modal-overlay: rgba(0, 0, 0, 0.7);
+}
+
+/* === BASE TYPOGRAPHY & LAYOUT === */
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: var(--bg);
+  color: var(--text-main);
+  line-height: 1.5;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* === HEADER & SCOREBOARD === */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(var(--bg-rgb), 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 0 0 0;
+  margin-bottom: 24px;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.header-title {
+  font-weight: 800;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-main);
+}
+
+.header-title svg {
+  color: var(--primary);
+  width: 24px;
+  height: 24px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.icon-btn:hover {
+  background: var(--surface-alt);
+  color: var(--text-main);
+}
+
+.stats-container {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  scrollbar-width: none;
+}
+.stats-container::-webkit-scrollbar { display: none; }
+
+.stat-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 100px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+}
+
+.stat-badge .dot { width: 8px; height: 8px; border-radius: 50%; }
+.stat-badge .val { font-family: 'JetBrains Mono', monospace; }
+.bg-neutral { background: var(--answered); }
+.bg-success { background: var(--success); }
+.bg-danger { background: var(--danger); }
+.bg-primary { background: var(--primary); }
+.text-success { color: var(--success); }
+.text-danger { color: var(--danger); }
+.text-primary { color: var(--primary); }
+
+.progress-track {
+  width: 100%;
+  height: 4px;
+  background: var(--border);
+}
+.progress-fill {
+  height: 100%;
+  background: var(--primary);
+  width: 0%;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* === TABS === */
+.tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 0 16px;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+.tab-btn:hover {
+  border-color: var(--border-hover);
+  color: var(--text-main);
+}
+.tab-btn.active {
+  background: var(--primary-bg);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* === QUESTION CARDS === */
+.q-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.q-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  animation: fadeIn 0.4s ease forwards;
+  opacity: 0;
+  transform: translateY(10px);
+}
+@keyframes fadeIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.q-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.q-card.state-correct { border-left: 4px solid var(--success); }
+.q-card.state-wrong { border-left: 4px solid var(--danger); }
+
+.q-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.q-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.q-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--surface-alt);
+  color: var(--text-muted);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.q-text {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: var(--text-main);
+}
+
+.options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--surface);
+  user-select: none;
+}
+.option:hover:not(.locked) {
+  border-color: var(--primary);
+  background: var(--surface-alt);
+}
+.option.locked { cursor: default; }
+
+.opt-letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--surface-alt);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.opt-text {
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* Option States */
+.option.chosen-right {
+  background: var(--success-bg);
+  border-color: var(--success);
+}
+.option.chosen-right .opt-letter {
+  background: var(--success);
+  color: white;
+}
+
+.option.chosen-wrong {
+  background: var(--danger-bg);
+  border-color: var(--danger);
+}
+.option.chosen-wrong .opt-letter {
+  background: var(--danger);
+  color: white;
+}
+
+.option.reveal {
+  border-color: var(--success);
+  background: var(--surface);
+}
+.option.reveal .opt-letter {
+  background: var(--success-bg);
+  color: var(--success);
+  border: 1px solid var(--success);
+}
+
+/* Feedback Box */
+.feedback {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  animation: expandDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes expandDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.feedback.success {
+  background: var(--success-bg);
+  color: var(--success);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+.feedback.error {
+  background: var(--danger-bg);
+  color: var(--danger);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+.feedback svg { flex-shrink: 0; margin-top: 2px; }
+
+/* === FINISH SCREEN === */
+#finishScreen {
+  display: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 48px 24px;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  margin-top: 24px;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.finish-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--primary-bg);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0 auto 24px;
+  border: 8px solid var(--surface);
+  box-shadow: 0 0 0 2px var(--border);
+}
+
+.finish-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; }
+.finish-subtitle { color: var(--text-muted); margin-bottom: 32px; font-weight: 500; }
+
+.finish-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.fin-stat {
+  background: var(--surface-alt);
+  padding: 16px;
+  border-radius: 16px;
+}
+.fin-stat .val { font-size: 1.5rem; font-weight: 800; margin-bottom: 4px; }
+.fin-stat .lbl { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; }
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 100px;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+}
+.btn-primary:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.5);
+}
+
+/* === MODALS (Settings & History) === */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--modal-overlay);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal {
+  background: var(--surface);
+  width: 90%;
+  max-width: 400px;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
+  
+  display: none;
+  transform: scale(0.95) translateY(20px);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+  opacity: 0;
+}
+.overlay.active .modal.active {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.modal-title { font-size: 1.25rem; font-weight: 700; }
+.modal-close {
+  background: var(--surface-alt);
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.modal-close:hover { background: var(--border); color: var(--text-main); }
+
+.theme-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.theme-btn {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 16px;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  border-radius: 16px;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.theme-btn svg { color: var(--text-muted); transition: color 0.2s; }
+.theme-btn:hover { border-color: var(--border-hover); background: var(--surface-alt); }
+.theme-btn.active {
+  border-color: var(--primary);
+  background: var(--primary-bg);
+}
+.theme-btn.active svg { color: var(--primary); }
+
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  margin-top: 16px;
+  color: var(--text-main);
+}
+.setting-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.setting-label .title { font-weight: 600; }
+.setting-label .hint { font-size: 0.75rem; color: var(--text-muted); font-weight: 500;}
+
+.num-input {
+  width: 70px;
+  padding: 8px;
+  border-radius: 10px;
+  border: 2px solid var(--border);
+  background: var(--surface-alt);
+  color: var(--text-main);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.num-input:focus { border-color: var(--primary); }
+
+.switch { position: relative; display: inline-block; width: 44px; height: 24px; flex-shrink: 0;}
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider {
+  position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+  background-color: var(--border-hover); transition: .4s; border-radius: 24px;
+}
+.slider:before {
+  position: absolute; content: ""; height: 18px; width: 18px;
+  left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%;
+}
+input:checked + .slider { background-color: var(--primary); }
+input:checked + .slider:before { transform: translateX(20px); }
+
+.history-list {
+  max-height: 350px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-right: 8px;
+}
+.history-list::-webkit-scrollbar { width: 6px; }
+.history-list::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 10px; }
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  background: var(--surface-alt);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+.history-info { display: flex; flex-direction: column; gap: 4px; }
+.history-score { font-weight: 800; font-size: 1.1rem; color: var(--text-main); }
+.history-meta { font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;}
+
+.btn-danger-outline {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid var(--danger);
+  color: var(--danger);
+  background: transparent;
+  border-radius: 16px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.btn-danger-outline:hover { background: var(--danger-bg); }
+.empty-history { text-align: center; color: var(--text-muted); padding: 30px 0; font-weight: 500; }
+
+@media (max-width: 600px) {
+  .overlay { align-items: flex-end; }
+  .modal {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 28px 28px 0 0;
+    border-bottom: none;
+    padding-bottom: calc(24px + env(safe-area-inset-bottom, 20px));
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.4s ease;
+  }
+  .overlay.active .modal.active { 
+    transform: translateY(0); 
+  }
+  .finish-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-top">
+      <div class="header-title">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0v3.75C20.25 20.153 16.556 22 12 22s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+        </svg>
+        Database Testbank
+      </div>
+      
+      <div class="header-actions">
+        <button class="icon-btn" onclick="confirmRefresh()" aria-label="Restart Quiz" title="Restart Quiz">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+          </svg>
+        </button>
+        <button class="icon-btn" onclick="openModal('historyModal')" aria-label="History">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
+          </svg>
+        </button>
+        <button class="icon-btn" onclick="openModal('settingsModal')" aria-label="Settings">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.99l1.005.828c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    
+    <div class="stats-container">
+      <div class="stat-badge text-primary" id="timerBadge">
+        <div class="dot bg-primary"></div>
+        <span class="val" id="timerDisplay">00:00</span>
+      </div>
+      <div class="stat-badge">
+        <div class="dot bg-neutral"></div>
+        <span>Answered</span>
+        <span class="val" id="sbA">0/45</span>
+      </div>
+      <div class="stat-badge text-success">
+        <div class="dot bg-success"></div>
+        <span>Correct</span>
+        <span class="val" id="sbC">0</span>
+      </div>
+      <div class="stat-badge text-danger">
+        <div class="dot bg-danger"></div>
+        <span>Wrong</span>
+        <span class="val" id="sbW">0</span>
+      </div>
+    </div>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="sbFill"></div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="tabs" id="tabsContainer">
+    <button class="tab-btn active" onclick="setFilter('all', this)">All Questions</button>
+    <button class="tab-btn" onclick="setFilter('CH1', this)">Ch1: Intro</button>
+    <button class="tab-btn" onclick="setFilter('LEC2', this)">Lec 2: Concepts</button>
+    <button class="tab-btn" onclick="setFilter('LEC34', this)">Lec 3/4: DDL</button>
+    <button class="tab-btn" onclick="setFilter('LEC5', this)">Lec 5: DML</button>
+    <button class="tab-btn" onclick="setFilter('TF', this)">True/False</button>
+  </div>
+
+  <div id="finishScreen">
+    <div class="finish-circle" id="finPct">0%</div>
+    <h2 class="finish-title" id="finTitle">Complete!</h2>
+    <p class="finish-subtitle" id="finMsg">You've finished all the questions.</p>
+    
+    <div class="finish-grid">
+      <div class="fin-stat">
+        <div class="val text-success" id="finC">0</div>
+        <div class="lbl">Correct</div>
+      </div>
+      <div class="fin-stat">
+        <div class="val text-danger" id="finW">0</div>
+        <div class="lbl">Wrong</div>
+      </div>
+      <div class="fin-stat">
+        <div class="val text-primary" id="finTime">00:00</div>
+        <div class="lbl">Time</div>
+      </div>
+      <div class="fin-stat">
+        <div class="val text-main" id="finTotal">45</div>
+        <div class="lbl">Total</div>
+      </div>
+    </div>
+    
+    <button class="btn-primary" onclick="retryQuiz()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+      </svg>
+      Retry Quiz
+    </button>
+  </div>
+
+  <div class="q-list" id="quizContainer">
+    </div>
+</main>
+
+<div class="overlay" id="mainOverlay" onclick="closeOverlays(event)">
+  
+  <div class="modal" id="settingsModal">
+    <div class="modal-header">
+      <h3 class="modal-title">Settings</h3>
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    
+    <div class="theme-options">
+      <button class="theme-btn" data-theme="light" onclick="setTheme('light')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+        </svg>
+        Light Mode
+      </button>
+      <button class="theme-btn" data-theme="dark" onclick="setTheme('dark')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+        </svg>
+        Dark Mode
+      </button>
+      <button class="theme-btn" data-theme="system" onclick="setTheme('system')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" />
+        </svg>
+        System Default
+      </button>
+    </div>
+    
+    <div class="setting-row">
+      <div class="setting-label">
+        <span class="title">Session Timer</span>
+        <span class="hint">Track time taken to finish</span>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="timerToggle" onchange="toggleTimerSetting(this)">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-label">
+        <span class="title">Randomize Questions</span>
+        <span class="hint">Shuffle question order</span>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="randomizeToggle" onchange="toggleRandomize(this)">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-label">
+        <span class="title">Test Yourself (Limit)</span>
+        <span class="hint">Leave empty for all questions</span>
+      </div>
+      <input type="number" id="limitInput" class="num-input" placeholder="All" min="1" max="45" onchange="updateLimit(this.value)">
+    </div>
+  </div>
+
+  <div class="modal" id="historyModal">
+    <div class="modal-header">
+      <h3 class="modal-title">Quiz History</h3>
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <div class="history-list" id="historyListContainer">
+      </div>
+    <button class="btn-danger-outline" onclick="clearHistory()">Clear History</button>
+  </div>
+
+</div>
+
+<script>
+// --- GLOBAL DATA ---
+const LETTERS = ['A', 'B', 'C', 'D'];
+const Q = [
+  // --- CH1: INTRO (ENCh01.pdf) ---
+  {id:1, s:'CH1', t:'Ch1: Intro', q:'A collection of related data is defined as:', o:['Metadata', 'Mini-world', 'Database', 'Data Dictionary'], a:2},
+  {id:2, s:'CH1', t:'Ch1: Intro', q:'What term describes "known facts that can be recorded and have an implicit meaning"?', o:['Schema', 'Entity', 'Attribute', 'Data'], a:3},
+  {id:3, s:'CH1', t:'Ch1: Intro', q:'Which of the following is responsible for authorizing access to the database and coordinating its use?', o:['Database Designer', 'End-user', 'Database Administrator', 'System Analyst'], a:2},
+  {id:4, s:'CH1', t:'Ch1: Intro', q:'Which end-users make up a large section of the population and use "canned transactions"?', o:['Parametric (Naïve) users', 'Casual users', 'Sophisticated users', 'Stand-alone users'], a:0},
+  {id:5, s:'CH1', t:'Ch1: Intro', q:'A data model is used to hide storage details and present users with a conceptual view. What is this called?', o:['Concurrency control', 'Program-data independence', 'Data Abstraction', 'Self-describing nature'], a:2},
+  {id:6, s:'CH1', t:'Ch1: Intro', q:'What does the DBMS catalog store to describe the database?', o:['Raw Data', 'Meta-data', 'Views', 'User permissions'], a:1},
+
+  // --- LECTURE 2: DB CONCEPTS (LECTURE 2.pdf) ---
+  {id:7, s:'LEC2', t:'Lec 2: Concepts', q:'An information unit that represents a class or group of things, objects or activities is called a(n):', o:['Relationship', 'Attribute', 'Entity', 'Key'], a:2},
+  {id:8, s:'LEC2', t:'Lec 2: Concepts', q:'The characteristics that describe an entity (e.g., student code, name) are called:', o:['Attributes', 'Tables', 'Views', 'Indexes'], a:0},
+  {id:9, s:'LEC2', t:'Lec 2: Concepts', q:'A field or group of fields through which it is possible to access data for any record in the table is:', o:['Foreign Key', 'Primary Key', 'Secondary Key', 'Alternate Key'], a:1},
+  {id:10, s:'LEC2', t:'Lec 2: Concepts', q:'What type of relationship connects two tables so that one record in the first table corresponds to exactly one record in the second table?', o:['1:N', 'M:N', '1:1', 'N:1'], a:2},
+  {id:11, s:'LEC2', t:'Lec 2: Concepts', q:'If one employee works in one department, but a department has many employees, the relationship from Department to Employee is:', o:['One to one', 'One to many', 'Many to many', 'None'], a:1},
+  {id:12, s:'LEC2', t:'Lec 2: Concepts', q:'Which SQL language type describes the entities and the relationships that exist between them?', o:['DML', 'DQL', 'DDL', 'TCL'], a:2},
+  {id:13, s:'LEC2', t:'Lec 2: Concepts', q:'SQL stands for:', o:['Structured Query Language', 'Standard Question Language', 'System Query Locator', 'Simple Quality Language'], a:0},
+
+  // --- LECTURE 3 & 4: DDL COMMANDS (LECTURE 3 & 4.pdf) ---
+  {id:14, s:'LEC34', t:'Lec 3/4: DDL', q:'Which command is used to create a new database?', o:['ADD DATABASE', 'CREATE DATABASE', 'NEW DATABASE', 'INSERT DATABASE'], a:1},
+  {id:15, s:'LEC34', t:'Lec 3/4: DDL', q:'Which constraint ensures that a field must have a unique value without allowing duplicates?', o:['UNIQUE', 'DEFAULT', 'CHECK', 'NOT NULL'], a:0},
+  {id:16, s:'LEC34', t:'Lec 3/4: DDL', q:'Which constraint automatically generates a unique number for a column?', o:['PRIMARY KEY', 'CHECK', 'IDENTITY', 'UNIQUE'], a:2},
+  {id:17, s:'LEC34', t:'Lec 3/4: DDL', q:'What is the primary goal of creating indexes?', o:['To reduce storage space', 'To speed up data retrieval', 'To automatically backup data', 'To create foreign keys'], a:1},
+  {id:18, s:'LEC34', t:'Lec 3/4: DDL', q:'What is the disadvantage of creating indexes?', o:['It slows down retrieval', 'It deletes old data', 'It slows down updating processes (adding, deleting, modifying)', 'It is not allowed on primary keys'], a:2},
+  {id:19, s:'LEC34', t:'Lec 3/4: DDL', q:'What are "fake tables" that have the same role as real tables but contain only queries, not data?', o:['Indexes', 'Constraints', 'Views', 'Entities'], a:2},
+  {id:20, s:'LEC34', t:'Lec 3/4: DDL', q:'Which command is used to add new columns to an existing table?', o:['CREATE TABLE', 'UPDATE TABLE', 'ALTER TABLE', 'INSERT TABLE'], a:2},
+  {id:21, s:'LEC34', t:'Lec 3/4: DDL', q:'Which command permanently removes a table from the database?', o:['DELETE TABLE', 'REMOVE TABLE', 'DROP TABLE', 'TRUNCATE TABLE'], a:2},
+  {id:22, s:'LEC34', t:'Lec 3/4: DDL', q:'Before dropping a table, you must ensure:', o:['It has at least 100 rows', 'There are no tables linked to it via a foreign key', 'The primary key is removed first', 'All views are active'], a:1},
+
+  // --- LECTURE 5: DML COMMANDS (LECTURE 5.pdf) ---
+  {id:23, s:'LEC5', t:'Lec 5: DML', q:'Which command is used to insert new records into a table?', o:['UPDATE', 'CREATE', 'ADD', 'INSERT INTO'], a:3},
+  {id:24, s:'LEC5', t:'Lec 5: DML', q:'Which DML command changes existing data inside a table?', o:['ALTER', 'UPDATE', 'MODIFY', 'CHANGE'], a:1},
+  {id:25, s:'LEC5', t:'Lec 5: DML', q:'What clause directs the database to search and retrieve rows that meet a specific condition?', o:['SET', 'VALUES', 'WHERE', 'FROM'], a:2},
+  {id:26, s:'LEC5', t:'Lec 5: DML', q:'The comparison operator "<>" stands for:', o:['Greater than or equal', 'Less than or equal', 'Not equal', 'Between'], a:2},
+  {id:27, s:'LEC5', t:'Lec 5: DML', q:'Which operator is used to search for similar words or patterns?', o:['LIKE', 'IN', 'BETWEEN', 'IS NULL'], a:0},
+  {id:28, s:'LEC5', t:'Lec 5: DML', q:'To select a value from a specific list of values in a WHERE clause, you use:', o:['BETWEEN', 'LIKE', 'IN (list)', 'OR'], a:2},
+  {id:29, s:'LEC5', t:'Lec 5: DML', q:'Which of the following operators takes the highest precedence (evaluated first)?', o:['AND', 'NOT', 'OR', 'Parentheses'], a:3},
+  {id:30, s:'LEC5', t:'Lec 5: DML', q:'Which statement is used to remove specific rows from a table?', o:['DELETE FROM', 'DROP TABLE', 'REMOVE', 'ERASE'], a:0},
+
+  // --- TRUE / FALSE (MIXED) ---
+  {id:31, s:'TF', t:'True/False', q:'A database management system (DBMS) allows the creation and maintenance of a computerized database.', o:['True', 'False'], a:0},
+  {id:32, s:'TF', t:'True/False', q:'A single column can be considered a Primary Key to access data for any line in a table.', o:['True', 'False'], a:0},
+  {id:33, s:'TF', t:'True/False', q:'A Many-to-Many relationship is symbolized by 1:N.', o:['True', 'False'], a:1},
+  {id:34, s:'TF', t:'True/False', q:'The Data Query Language (DQL) includes the SELECT command to extract information.', o:['True', 'False'], a:0},
+  {id:35, s:'TF', t:'True/False', q:'A table name in SQL can begin with a number.', o:['True', 'False'], a:1},
+  {id:36, s:'TF', t:'True/False', q:'The DEFAULT constraint assigns a predetermined value to a field if none is specified.', o:['True', 'False'], a:0},
+  {id:37, s:'TF', t:'True/False', q:'A foreign key field must correspond to a specific value of a primary key in another table.', o:['True', 'False'], a:0},
+  {id:38, s:'TF', t:'True/False', q:'The ALTER command is used to remove an entire database from the system.', o:['True', 'False'], a:1},
+  {id:39, s:'TF', t:'True/False', q:'The DROP INDEX command cancels/removes an index on a table.', o:['True', 'False'], a:0},
+  {id:40, s:'TF', t:'True/False', q:'When inserting character strings and dates in SQL, they must be enclosed in quotation marks.', o:['True', 'False'], a:0},
+  {id:41, s:'TF', t:'True/False', q:'The operator IS NULL checks if a field contains any value.', o:['True', 'False'], a:1},
+  {id:42, s:'TF', t:'True/False', q:'The NOT operator reverses the selection in a WHERE condition.', o:['True', 'False'], a:0},
+  {id:43, s:'TF', t:'True/False', q:'If you write DELETE FROM Employee without a WHERE clause, all rows are deleted.', o:['True', 'False'], a:0},
+  {id:44, s:'TF', t:'True/False', q:'Views store real, physical data just like standard tables.', o:['True', 'False'], a:1},
+  {id:45, s:'TF', t:'True/False', q:'In the rules of precedence, AND is evaluated before NOT.', o:['True', 'False'], a:1}
+];
+
+// --- THEME MANAGEMENT ---
+const sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+let currentTheme = localStorage.getItem('theme') || 'system';
+
+function applyTheme(theme) {
+  if (theme === 'system') {
+    document.documentElement.setAttribute('data-theme', sysDark.matches ? 'dark' : 'light');
+  } else {
+    document.documentElement.setAttribute('data-theme', theme);
+  }
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    if (btn.dataset.theme === theme) btn.classList.add('active');
+    else btn.classList.remove('active');
+  });
+}
+
+function setTheme(theme) {
+  currentTheme = theme;
+  localStorage.setItem('theme', theme);
+  applyTheme(theme);
+}
+sysDark.addEventListener('change', () => { if (currentTheme === 'system') applyTheme('system'); });
+applyTheme(currentTheme);
+
+// --- MODALS & ANIMATION ---
+const overlay = document.getElementById('mainOverlay');
+const modals = document.querySelectorAll('.modal');
+
+function openModal(modalId) {
+  modals.forEach(m => {
+    m.classList.remove('active');
+    m.style.display = 'none';
+  });
+  
+  const targetModal = document.getElementById(modalId);
+  targetModal.style.display = 'block';
+  void targetModal.offsetWidth;
+  targetModal.classList.add('active');
+  overlay.classList.add('active');
+  
+  if(modalId === 'historyModal') renderHistory();
+}
+
+function closeModal() {
+  overlay.classList.remove('active');
+  modals.forEach(m => {
+    m.classList.remove('active');
+    setTimeout(() => { m.style.display = 'none'; }, 300);
+  });
+}
+
+function closeOverlays(e) { if (e.target === overlay) closeModal(); }
+
+// --- HISTORY LOGIC ---
+let quizHistory = JSON.parse(localStorage.getItem('quizHistory')) || [];
+
+function saveHistory(score, total, timeSecs) {
+  quizHistory.unshift({ date: Date.now(), score: score, total: total, time: timeSecs });
+  localStorage.setItem('quizHistory', JSON.stringify(quizHistory));
+}
+
+function clearHistory() {
+  if(!confirm("Are you sure you want to clear your quiz history?")) return;
+  quizHistory = [];
+  localStorage.removeItem('quizHistory');
+  renderHistory();
+}
+
+function renderHistory() {
+  const container = document.getElementById('historyListContainer');
+  container.innerHTML = '';
+  if (quizHistory.length === 0) {
+    container.innerHTML = `<div class="empty-history">No past attempts found. Try finishing a quiz!</div>`;
+    return;
+  }
+  
+  quizHistory.forEach(h => {
+    const d = new Date(h.date);
+    const dateStr = d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit' });
+    const pct = Math.round((h.score / h.total) * 100);
+    const timeStr = formatTimeStr(h.time);
+    let colorClass = pct >= 75 ? 'text-success' : (pct >= 50 ? 'text-main' : 'text-danger');
+    
+    const html = `
+      <div class="history-item">
+        <div class="history-info">
+          <div class="history-score ${colorClass}">${h.score} / ${h.total} (${pct}%)</div>
+          <div class="history-meta">${dateStr}</div>
+        </div>
+        <div class="history-meta" style="font-weight:700">⏱ ${timeStr}</div>
+      </div>
+    `;
+    container.insertAdjacentHTML('beforeend', html);
+  });
+}
+
+// --- TIMER LOGIC ---
+let timerInterval = null;
+let secondsElapsed = 0;
+let isTimerRunning = false;
+
+function formatTimeStr(s) {
+  const m = Math.floor(s / 60).toString().padStart(2, '0');
+  const sec = (s % 60).toString().padStart(2, '0');
+  return `${m}:${sec}`;
+}
+
+function startTimer() {
+  if (isTimerRunning || !isTimerEnabled) return;
+  isTimerRunning = true;
+  timerInterval = setInterval(() => {
+    secondsElapsed++;
+    document.getElementById('timerDisplay').innerText = formatTimeStr(secondsElapsed);
+  }, 1000);
+}
+
+function stopTimer() {
+  clearInterval(timerInterval);
+  isTimerRunning = false;
+}
+
+function resetTimer() {
+  stopTimer();
+  secondsElapsed = 0;
+  document.getElementById('timerDisplay').innerText = "00:00";
+}
+
+// --- SETTINGS STATE & RANDOMIZATION ---
+let displayQ = [...Q];
+
+let isTimerEnabled = localStorage.getItem('enableTimer') === 'true'; 
+let isRandomized = localStorage.getItem('randomize') === 'true';
+let questionLimit = parseInt(localStorage.getItem('questionLimit')) || Q.length;
+
+document.getElementById('timerToggle').checked = isTimerEnabled;
+document.getElementById('randomizeToggle').checked = isRandomized;
+document.getElementById('limitInput').value = questionLimit === Q.length ? '' : questionLimit;
+document.getElementById('timerBadge').style.display = isTimerEnabled ? 'flex' : 'none';
+
+function toggleTimerSetting(el) {
+  isTimerEnabled = el.checked;
+  localStorage.setItem('enableTimer', isTimerEnabled);
+  document.getElementById('timerBadge').style.display = isTimerEnabled ? 'flex' : 'none';
+  if (!isTimerEnabled) stopTimer();
+  else if (answeredCount > 0) startTimer();
+}
+
+function updateLimit(val) {
+  let limit = parseInt(val);
+  if (isNaN(limit) || limit <= 0 || limit > Q.length) limit = Q.length; 
+  questionLimit = limit;
+  localStorage.setItem('questionLimit', questionLimit);
+  retryQuiz(); 
+}
+
+function toggleRandomize(el) {
+  isRandomized = el.checked;
+  localStorage.setItem('randomize', isRandomized);
+  retryQuiz();
+}
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+function applySettings() {
+  let tempQ = [...Q];
+  if (isRandomized) shuffleArray(tempQ);
+  else tempQ.sort((a, b) => a.id - b.id);
+  
+  if (questionLimit && questionLimit < tempQ.length) displayQ = tempQ.slice(0, questionLimit);
+  else displayQ = tempQ;
+}
+
+applySettings();
+
+// --- QUIZ STATE ---
+let answers = {};
+let correctCount = 0;
+let wrongCount = 0;
+let answeredCount = 0;
+let currentFilter = 'all';
+
+// --- ICONS ---
+const iconCheck = `<svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>`;
+const iconCross = `<svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>`;
+
+// --- RENDERING ---
+function updateScoreboard() {
+  const total = currentFilter === 'all' ? displayQ.length : displayQ.filter(q => q.s === currentFilter).length;
+  
+  let currentAnsweredCount = 0;
+  let currentCorrect = 0;
+  let currentWrong = 0;
+  
+  const filteredQ = currentFilter === 'all' ? displayQ : displayQ.filter(q => q.s === currentFilter);
+  filteredQ.forEach(q => {
+     if(answers[q.id] !== undefined) {
+         currentAnsweredCount++;
+         if(answers[q.id] === q.a) currentCorrect++;
+         else currentWrong++;
+     }
+  });
+  
+  document.getElementById('sbA').innerText = `${currentAnsweredCount}/${total}`;
+  document.getElementById('sbC').innerText = currentCorrect;
+  document.getElementById('sbW').innerText = currentWrong;
+  
+  const percentage = total === 0 ? 0 : (currentAnsweredCount / total) * 100;
+  document.getElementById('sbFill').style.width = percentage + '%';
+  
+  if(currentAnsweredCount === total && total > 0) showFinishScreen(currentCorrect, currentWrong, total);
+}
+
+function handleChoose(qId, optIdx) {
+  if (answers[qId] !== undefined) return;
+  if (answeredCount === 0) startTimer();
+  
+  answers[qId] = optIdx;
+  const question = Q.find(q => q.id === qId);
+  const isCorrect = (optIdx === question.a);
+  
+  if (isCorrect) correctCount++;
+  else wrongCount++;
+  answeredCount++;
+  
+  const card = document.getElementById(`qcard-${qId}`);
+  card.classList.add(isCorrect ? 'state-correct' : 'state-wrong');
+  
+  const options = card.querySelectorAll('.option');
+  options.forEach((optEl, i) => {
+    optEl.classList.add('locked');
+    optEl.removeAttribute('onclick');
+    if (i === optIdx && isCorrect) optEl.classList.add('chosen-right');
+    if (i === optIdx && !isCorrect) optEl.classList.add('chosen-wrong');
+    if (!isCorrect && i === question.a) optEl.classList.add('reveal');
+  });
+  
+  const optsContainer = card.querySelector('.options-grid');
+  const feedbackDiv = document.createElement('div');
+  feedbackDiv.className = `feedback ${isCorrect ? 'success' : 'error'}`;
+  feedbackDiv.innerHTML = isCorrect 
+    ? `${iconCheck} <span><strong>Correct!</strong> The answer is ${LETTERS[question.a]}: ${question.o[question.a]}</span>`
+    : `${iconCross} <span><strong>Incorrect.</strong> The correct answer is ${LETTERS[question.a]}: ${question.o[question.a]}</span>`;
+  optsContainer.insertAdjacentElement('afterend', feedbackDiv);
+  
+  updateScoreboard();
+}
+
+function renderQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  
+  const filteredQ = currentFilter === 'all' ? displayQ : displayQ.filter(q => q.s === currentFilter);
+  
+  filteredQ.forEach((q, index) => {
+    const isAnswered = answers[q.id] !== undefined;
+    const userAns = answers[q.id];
+    const isCorrect = isAnswered && (userAns === q.a);
+    
+    let cardClass = 'q-card';
+    if(isAnswered) cardClass += isCorrect ? ' state-correct' : ' state-wrong';
+    
+    let optionsHtml = q.o.map((optText, i) => {
+      let optClass = 'option';
+      let clickAttr = `onclick="handleChoose(${q.id}, ${i})"`;
+      if (isAnswered) {
+        optClass += ' locked';
+        clickAttr = '';
+        if (i === userAns && isCorrect) optClass += ' chosen-right';
+        if (i === userAns && !isCorrect) optClass += ' chosen-wrong';
+        if (!isCorrect && i === q.a) optClass += ' reveal';
+      }
+      return `<div class="${optClass}" ${clickAttr}><div class="opt-letter">${LETTERS[i]}</div><div class="opt-text">${optText}</div></div>`;
+    }).join('');
+    
+    let feedbackHtml = '';
+    if (isAnswered) {
+      feedbackHtml = `
+        <div class="feedback ${isCorrect ? 'success' : 'error'}">
+          ${isCorrect ? iconCheck : iconCross}
+          <span><strong>${isCorrect ? 'Correct!' : 'Incorrect.'}</strong> The answer is ${LETTERS[q.a]}: ${q.o[q.a]}</span>
+        </div>
+      `;
+    }
+    
+    const cardHtml = `
+      <div class="${cardClass}" id="qcard-${q.id}" style="animation-delay: ${Math.min(index * 0.03, 0.4)}s">
+        <div class="q-header"><span class="q-tag">${q.t}</span><span class="q-num">Q${q.id}</span></div>
+        <div class="q-text">${q.q}</div>
+        <div class="options-grid">${optionsHtml}</div>
+        ${feedbackHtml}
+      </div>
+    `;
+    container.insertAdjacentHTML('beforeend', cardHtml);
+  });
+  updateScoreboard();
+}
+
+function setFilter(filterVal, btnEl) {
+  currentFilter = filterVal;
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  btnEl.classList.add('active');
+  renderQuiz();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showFinishScreen(currentCorrect, currentWrong, total) {
+  stopTimer();
+  saveHistory(currentCorrect, total, secondsElapsed);
+  
+  const finishScreen = document.getElementById('finishScreen');
+  const pct = Math.round((currentCorrect / total) * 100);
+  
+  document.getElementById('finPct').innerText = `${pct}%`;
+  document.getElementById('finC').innerText = currentCorrect;
+  document.getElementById('finW').innerText = currentWrong;
+  document.getElementById('finTotal').innerText = total;
+  
+  document.getElementById('finTime').parentElement.style.display = isTimerEnabled ? 'block' : 'none';
+  if(isTimerEnabled) document.getElementById('finTime').innerText = formatTimeStr(secondsElapsed);
+  
+  const titleEl = document.getElementById('finTitle');
+  const msgEl = document.getElementById('finMsg');
+  
+  if (pct >= 90) { titleEl.innerText = 'Outstanding! 🎉'; msgEl.innerText = 'You have mastered the material.'; }
+  else if (pct >= 75) { titleEl.innerText = 'Great Job! 👏'; msgEl.innerText = 'You have a solid understanding.'; }
+  else if (pct >= 60) { titleEl.innerText = 'Good Effort 👍'; msgEl.innerText = 'A little more review and you will be perfect.'; }
+  else { titleEl.innerText = 'Keep Practicing 📚'; msgEl.innerText = 'Review the topics and try again!'; }
+  
+  finishScreen.style.display = 'block';
+  finishScreen.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function retryQuiz() {
+  answers = {};
+  correctCount = 0;
+  wrongCount = 0;
+  answeredCount = 0;
+  document.getElementById('finishScreen').style.display = 'none';
+  
+  resetTimer();
+  applySettings(); 
+  
+  const tabs = document.querySelectorAll('.tab-btn');
+  setFilter('all', tabs[0]);
+}
+
+function confirmRefresh() {
+  if (answeredCount === 0 || confirm("Are you sure you want to restart the quiz? Your current progress will be lost.")) {
+    retryQuiz();
+  }
+}
+
+// UI INTERACTIONS
+const tabsContainer = document.getElementById('tabsContainer');
+tabsContainer.addEventListener('wheel', (evt) => {
+  evt.preventDefault();
+  tabsContainer.scrollLeft += evt.deltaY;
+}, { passive: false });
+
+// Init
+renderQuiz();
+
+</script>
+</body>
+</html>
